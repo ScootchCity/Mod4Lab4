@@ -36,6 +36,20 @@ int main()
 	size = promptSize();
 
 	int* dataSet = new int[size]; //dynamic array
+	populate(size, dataSet);
+
+	cout << "Unsorted Array:" << endl;
+	display(size, dataSet);
+	cout << endl;
+
+	sort(size, dataSet);
+
+	cout << "Sorted Array:" << endl;
+	display(size, dataSet);
+	cout << endl;
+
+	delete[] dataSet;
+	dataSet = nullptr;
 }
 
 int promptSize()
@@ -47,9 +61,9 @@ int promptSize()
 	{
 		cout << "Desired array size: ";
 		cin >> size;
-		if (size > 0)
+		if (size > 0) //Checks that input is valid (above zero)
 		{
-			validInput;
+			validInput = true;
 		}
 	}
 
@@ -58,18 +72,44 @@ int promptSize()
 
 void populate(int size, int* ptr)
 {
-	for (int i = 0; i <= size; i++)
-	{
+	const int UPPER_BOUND = 50;
+	srand(time(NULL));
 
+	for (int i = 0; i < size; i++)
+	{
+		ptr[i] = rand() % UPPER_BOUND;
 	}
 }
 
 void display(int size, int* ptr)
 {
-
+	for (int i = 0; i < size; i++)
+	{
+		if (i % 10 == 0 && i > 0)
+		{
+			cout << endl;
+		}
+		cout << '\t' << ptr[i];
+	}
 }
 
 void sort(int size, int* ptr)
 {
-
+	bool swapOccured = true;
+	int swapData;
+	
+	while(swapOccured) // bool checks to see if sort is finished
+	{
+		swapOccured = false;
+		for (int i = 0; i < size - 1; i++) //bubble sort
+		{
+			if (ptr[i] > ptr[i + 1])
+			{
+				swapData = ptr[i];
+				ptr[i] = ptr[i + 1];
+				ptr[i + 1] = swapData;
+				swapOccured = true;
+			}
+		}
+	}
 }
